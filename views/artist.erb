@@ -1,0 +1,107 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>MusicSearch</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+
+
+</head>
+<body>
+
+<div class="container">
+	  <h1>MusicSearch</h1>
+	  <p>Search the music</p> 
+
+	 </br>
+	 </br>
+
+	 <% mbid = params['mbid'] 
+
+	 response = RestClient::Request.execute(:method => :get,
+    :url => 'http://ws.audioscrobbler.com/2.0/?method=artist.getinfo&mbid='+ mbid +'&api_key=0ec22e6fe858f16002cec5f6bfe151ae&format=json',
+     )
+
+ 	 x = JSON.parse(response)
+
+ 	 artist_name = x["artist"]["name"]
+
+	 %>
+
+	 <div class="row">
+	 <div class="col-sm-3">
+     <img src=<%= x["artist"]["image"][4]["#text"] %> class="img-rounded" alt="Cinque Terre" width="240" height="165">
+    
+    </div>
+    <div class="col-sm-7">
+     <h1><%= x["artist"]["name"] %></h1>
+     <p><%= x["artist"]["bio"]["summary"] %></p>
+
+	</div>
+	</div>
+	</br>
+
+	<% 
+
+  response = RestClient::Request.execute(
+    :method => :get,
+    :url => 'http://ws.audioscrobbler.com/2.0/?method=track.search&artist=' + artist_name + '&track=' + artist_name + '&api_key=0ec22e6fe858f16002cec5f6bfe151ae&format=json&limit=4',
+  )
+
+  x = JSON.parse(response) %>
+
+ <div class="row">
+
+  <h2>Top tracks</h2>
+  <% for i in 0..x["results"]["trackmatches"]["track"].length - 1 %>
+  
+    <div class="col-sm-3">
+     <img src=<%= x["results"]["trackmatches"]["track"][i]["image"][2]["#text"] %> class="img-rounded" alt="Cinque Terre" width="182" height="138">
+     <h5><%=  x["results"]["trackmatches"]["track"][i]["name"].to_s %></h5>
+     </br>
+    </div>
+   
+    <%  end  %>
+
+  </div>
+
+
+  </br>
+
+ <% 
+
+  response = RestClient::Request.execute(
+    :method => :get,
+    :url => 'http://ws.audioscrobbler.com/2.0/?method=album.search&album=' + artist_name + '&api_key=0ec22e6fe858f16002cec5f6bfe151ae&format=json&limit=4',
+  )
+
+  x = JSON.parse(response) %>
+
+  <div class="row">
+
+  <h2>Top albums</h2>
+  <% for i in 0..x["results"]["albummatches"]["album"].length - 1 %>
+  
+    <div class="col-sm-3">
+     <img src=<%= x["results"]["albummatches"]["album"][i]["image"][2]["#text"] %> class="img-rounded" alt="Cinque Terre" width="182" height="138">
+     <h5><%=  x["results"]["albummatches"]["album"][i]["name"].to_s %></h5>
+     </br>
+    </div>
+   
+    <%  end  %>
+   
+  </div>
+
+
+
+
+</div>
+
+
+</body>
+</html>

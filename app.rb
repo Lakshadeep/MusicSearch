@@ -27,11 +27,15 @@ get '/search/' do
 end
 post '/search-p/' do
 	search_key = params[:search_key] || "Coldplay"
-    
-
     erb :index_post, :locals => {'search_key' => search_key}
-	
+end
 
+get '/artist' do
+	erb:artist
+end
+
+get '/album' do
+	erb:album
 end
 
 # end
