@@ -54,7 +54,7 @@
 
    <% for i in 0..x["album"]["tracks"]["track"].length - 1 %>
 
-    <a href="#" class="list-group-item ">
+    <a href="/track?name=<%= x["album"]["tracks"]["track"][i]["name"] %>&artist=<%= artist %>" class="list-group-item ">
       <h4 class="list-group-item-heading"><%= x["album"]["tracks"]["track"][i]["name"] %></h4>
       <p class="list-group-item-text">Duration: <%= x["album"]["tracks"]["track"][i]["duration"].to_i/100.0 %></p>
     </a>
