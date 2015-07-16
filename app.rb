@@ -26,10 +26,10 @@ get '/search/' do
 
 end
 post '/search-p/' do
-	greeting = params[:search_key] || "Coldplay"
+	search_key = params[:search_key] || "Coldplay"
     
 
-    erb :index_post, :locals => {'search_key' => greeting}
+    erb :index_post, :locals => {'search_key' => search_key}
 	
 
 end
