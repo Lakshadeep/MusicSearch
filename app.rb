@@ -7,15 +7,13 @@ require "net/https"
 require "uri"
 require 'json'
 require 'open-uri'
-require 'httparty'
 require 'rest-client'
 
-require 'nokogiri'
+
 
 register Sinatra::Twitter::Bootstrap::Assets
 use Rack::CommonLogger
 enable :inline_templates
-
 set :public_folder, 'views'
 
 get '/' do
@@ -39,7 +37,6 @@ get '/track' do
 	erb:track
 end
 
-# end
 
 
 

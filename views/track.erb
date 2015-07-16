@@ -30,40 +30,47 @@
 
 	 </br></br>
 	 </br>
-
+<div class="container" >
 	 <div class="row">
 	 <div class="col-sm-3">
+   <% if !x["track"]["album"].nil? %>
     <img src=<%= x["track"]["album"]["image"][3]["#text"] %> class="img-rounded" alt="Cinque Terre" width="240" height="220"> 
-    
+    <% else %>
+    <img src="" class="img-rounded" alt="No image available" width="240" height="220"> 
+    <% end %>
+
     </div>
     <div class="col-sm-7">
      <h1><%= track %></h1>
+     <% if !x["track"]["album"].nil? %>
      <h3>Album: <%= x["track"]["album"]["title"] %></h3>
+     <% end %>
      <h4>Artist: <%= artist %></h4>
      <p>Duration: <%= x["track"]["duration"].to_i/100000.0 %></p> 
 
 
 	</div>
 	</div>
-	</br>
-</div>
-<div class="container" >
+	
+
+
   <h3>About</h3>
 
-  <div class="span6" >
-  <%= if x["track"]["wiki"].nil? 
-          "Not avilable"
-          else 
-            x["track"]["wiki"]["summary"] 
-          end %>
+ 
+  <% if x["track"]["wiki"].nil? %>
+   <div class="span6" >  <p>"Not avilable"</p> </div>
+   <% else %>
+    <div class="span6" ><%=  x["track"]["wiki"]["summary"] %> </div>
+
+  <% end %>
   
  
-  </div>
+  
  
 
 </div>
 
-</div>
+
 
 
 </body>
