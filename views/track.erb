@@ -51,7 +51,11 @@
   <h3>About</h3>
 
   <div class="span6" >
-  <%= x["track"]["wiki"]["summary"] %>
+  <%= if x["track"]["wiki"].nil? 
+          "Not avilable"
+          else 
+            x["track"]["wiki"]["summary"] 
+          end %>
   
  
   </div>

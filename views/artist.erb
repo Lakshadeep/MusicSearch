@@ -62,7 +62,8 @@
   
     <div class="col-sm-3">
      <img src=<%= x["results"]["trackmatches"]["track"][i]["image"][2]["#text"] %> class="img-rounded" alt="Cinque Terre" width="182" height="138">
-     <h5><%=  x["results"]["trackmatches"]["track"][i]["name"].to_s %></h5>
+     <h5><a href="/track?name=<%= x["results"]["trackmatches"]["track"][i]["name"] %>&artist=<%= x["results"]["trackmatches"]["track"][i]["artist"] %>" >
+     <%=  x["results"]["trackmatches"]["track"][i]["name"].to_s %></a></h5>
      </br>
     </div>
    
@@ -89,7 +90,8 @@
   
     <div class="col-sm-3">
      <img src=<%= x["results"]["albummatches"]["album"][i]["image"][2]["#text"] %> class="img-rounded" alt="Cinque Terre" width="182" height="138">
-     <h5><%=  x["results"]["albummatches"]["album"][i]["name"].to_s %></h5>
+     <h5><a href="/album?name=<%= x["results"]["albummatches"]["album"][i]["name"] %>&artist=<%= x["results"]["albummatches"]["album"][i]["artist"] %>" >
+     <%=  x["results"]["albummatches"]["album"][i]["name"].to_s %></a></h5>
      </br>
     </div>
    

@@ -50,15 +50,27 @@
   <div class="row">
 
   <h1>Artists</h1>
+  <% if !x["results"]["opensearch:totalResults"].to_i == 0  %>
   <% for i in 0..x["results"]["artistmatches"]["artist"].length - 1 %>
   
     <div class="col-sm-3">
      <img src=<%= x["results"]["artistmatches"]["artist"][i]["image"][2]["#text"] %> class="img-rounded" alt="Cinque Terre" width="182" height="138">
+
+     <% if !x["results"]["artistmatches"]["artist"][i]["mbid"].empty? %>
+     <h5><a href="/artist?mbid=<%= x["results"]["artistmatches"]["artist"][i]["mbid"] %>" >
+     <%=  x["results"]["artistmatches"]["artist"][i]["name"].to_s %></a></h5>
+     <% else %>
      <h5><%=  x["results"]["artistmatches"]["artist"][i]["name"].to_s %></h5>
+     <% end %>
      </br>
     </div>
    
     <%  end  %>
+    <% else %>
+    <div class="col-sm-12">
+      <p> Oops! No results match your search </p>
+      </div>
+    <% end %>
    
   </div>
 
@@ -75,15 +87,25 @@
   <div class="row">
 
   <h1>Albums</h1>
+  <% if !x["results"]["opensearch:totalResults"].to_i == 0 %>
   <% for i in 0..x["results"]["albummatches"]["album"].length - 1 %>
   
     <div class="col-sm-3">
+    
+  
      <img src=<%= x["results"]["albummatches"]["album"][i]["image"][2]["#text"] %> class="img-rounded" alt="Cinque Terre" width="182" height="138">
-     <h5><%=  x["results"]["albummatches"]["album"][i]["name"].to_s %></h5>
+     
+     <h5><a href="/album?name=<%= x["results"]["albummatches"]["album"][i]["name"] %>&artist=<%= x["results"]["albummatches"]["album"][i]["artist"] %>" >
+     <%=  x["results"]["albummatches"]["album"][i]["name"].to_s %></a></h5>
      </br>
     </div>
    
     <%  end  %>
+     <% else %>
+    <div class="col-sm-12">
+      <p> Oops! No results match your search </p>
+    </div>
+    <% end %>
    
   </div>
   
@@ -101,15 +123,26 @@
   <div class="row">
 
   <h1>Tracks</h1>
+  <% if !x["results"]["opensearch:totalResults"].to_i == 0  %>
   <% for i in 0..x["results"]["trackmatches"]["track"].length - 1 %>
   
     <div class="col-sm-3">
+    <% if x["results"]["trackmatches"]["track"][i]["image"].nil? %>
+    <img src="" class="img-rounded" alt="Image not available" width="182" height="138">
+    <% else %>
      <img src=<%= x["results"]["trackmatches"]["track"][i]["image"][2]["#text"] %> class="img-rounded" alt="Cinque Terre" width="182" height="138">
-     <h5><%=  x["results"]["trackmatches"]["track"][i]["name"].to_s %></h5>
+     <% end %>
+     <h5><a href="/track?name=<%= x["results"]["trackmatches"]["track"][i]["name"] %>&artist=<%= x["results"]["trackmatches"]["track"][i]["artist"] %>" >
+     <%=  x["results"]["trackmatches"]["track"][i]["name"].to_s %></a></h5>
      </br>
     </div>
    
     <%  end  %>
+      <% else %>
+    <div class="col-sm-12">
+      <p> Oops! No results match your search </p>
+     </div> 
+    <% end %>
 
   </div>
 
