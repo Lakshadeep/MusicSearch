@@ -8,21 +8,25 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
   <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 
+  <nav class="navbar navbar-inverse navbar-fixed-top">
+  <a class="navbar-brand" href="/">MusicSearch</a>
+
+  </nav>
+
 
 </head>
 <body>
 
 
-<form role="form" action="/search-p/" method="post">
+<form role="form" action="/search/" method="post">
 
 <div class="container">
-  <h1>MusicSearch</h1>
-  <p>Search the music</p> 
-  </br>
+  
+  </br></br></br></br></br>
   <div class="row">
     <div class="col-xs-8">
       <div class="form-group">
-        <input type="text" class="form-control" name="search_key">
+        <input type="text" class="form-control" name="search_key" required="true">
       </div>  
     </div>
     <div class="col-xs-4">
@@ -50,11 +54,11 @@
   <div class="row">
 
   <h1>Artists</h1>
-  <% if !x["results"]["opensearch:totalResults"].to_i == 0  %>
+  <% if x["results"]["opensearch:totalResults"].to_i != 0  %>
   <% for i in 0..x["results"]["artistmatches"]["artist"].length - 1 %>
   
     <div class="col-sm-3">
-     <img src=<%= x["results"]["artistmatches"]["artist"][i]["image"][2]["#text"] %> class="img-rounded" alt="Cinque Terre" width="182" height="138">
+     <img src=<%= x["results"]["artistmatches"]["artist"][i]["image"][2]["#text"] %> class="img-rounded" alt="No image available" width="182" height="160">
 
      <% if !x["results"]["artistmatches"]["artist"][i]["mbid"].empty? %>
      <h5><a href="/artist?mbid=<%= x["results"]["artistmatches"]["artist"][i]["mbid"] %>" >
@@ -87,13 +91,13 @@
   <div class="row">
 
   <h1>Albums</h1>
-  <% if !x["results"]["opensearch:totalResults"].to_i == 0 %>
+  <% if x["results"]["opensearch:totalResults"].to_i != 0 %>
   <% for i in 0..x["results"]["albummatches"]["album"].length - 1 %>
   
     <div class="col-sm-3">
     
   
-     <img src=<%= x["results"]["albummatches"]["album"][i]["image"][2]["#text"] %> class="img-rounded" alt="Cinque Terre" width="182" height="138">
+     <img src=<%= x["results"]["albummatches"]["album"][i]["image"][2]["#text"] %> class="img-rounded" alt="No image available" width="182" height="160">
      
      <h5><a href="/album?name=<%= x["results"]["albummatches"]["album"][i]["name"] %>&artist=<%= x["results"]["albummatches"]["album"][i]["artist"] %>" >
      <%=  x["results"]["albummatches"]["album"][i]["name"].to_s %></a></h5>
@@ -123,14 +127,14 @@
   <div class="row">
 
   <h1>Tracks</h1>
-  <% if !x["results"]["opensearch:totalResults"].to_i == 0  %>
+  <% if x["results"]["opensearch:totalResults"].to_i != 0  %>
   <% for i in 0..x["results"]["trackmatches"]["track"].length - 1 %>
   
     <div class="col-sm-3">
     <% if x["results"]["trackmatches"]["track"][i]["image"].nil? %>
     <img src="" class="img-rounded" alt="Image not available" width="182" height="138">
     <% else %>
-     <img src=<%= x["results"]["trackmatches"]["track"][i]["image"][2]["#text"] %> class="img-rounded" alt="Cinque Terre" width="182" height="138">
+     <img src=<%= x["results"]["trackmatches"]["track"][i]["image"][2]["#text"] %> class="img-rounded" alt="No image available" width="182" height="160">
      <% end %>
      <h5><a href="/track?name=<%= x["results"]["trackmatches"]["track"][i]["name"] %>&artist=<%= x["results"]["trackmatches"]["track"][i]["artist"] %>" >
      <%=  x["results"]["trackmatches"]["track"][i]["name"].to_s %></a></h5>

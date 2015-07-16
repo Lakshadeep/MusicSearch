@@ -7,22 +7,28 @@
   <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
   <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+  <nav class="navbar navbar-inverse" >
+  <a class="navbar-brand" href="/">MusicSearch</a>
+  </nav>
+
 
 
 </head>
 <body>
 
 
-<form role="form" action="/search-p/" method="post">
 
-<div class="container">
-  <h1>MusicSearch</h1>
-  <p>Search the music</p> 
-  </br>
+<form role="form" action="/search/" method="post">
+
+
+
+<div class="container" style="padding-top:60px">
+ 
   <div class="row">
     <div class="col-xs-8">
       <div class="form-group">
         <input type="text" class="form-control" name="search_key">
+        <h3><center><strong><i>"Search anything related to music"</i></strong></center></h3>
       </div>  
     </div>
     <div class="col-xs-4">
@@ -32,92 +38,9 @@
 
   </form>
 
-  <% 
 
-
-  $search_key = "coldplay"
-
-  if params['search_key']
-     $search_key = params['search_key']
-  end
-
-  response = RestClient::Request.execute(
-    :method => :get,
-    :url => 'http://ws.audioscrobbler.com/2.0/?method=artist.search&artist=' + $search_key + '&api_key=0ec22e6fe858f16002cec5f6bfe151ae&format=json&limit=4',
-  )
-
-
-  x = JSON.parse(response) %>
-
-
-  <div class="row">
-
-  <h1>Artists</h1>
-  <% for i in 0..x["results"]["artistmatches"]["artist"].length - 1 %>
-  
-    <div class="col-sm-3">
-     <img src=<%= x["results"]["artistmatches"]["artist"][i]["image"][2]["#text"] %> class="img-rounded" alt="Cinque Terre" width="182" height="138">
-     <h5><%=  x["results"]["artistmatches"]["artist"][i]["name"].to_s %></h5>
-     </br>
-    </div>
-   
-    <%  end  %>
-   
-  </div>
 
   
-  <% 
-
-  response = RestClient::Request.execute(
-    :method => :get,
-    :url => 'http://ws.audioscrobbler.com/2.0/?method=album.search&album=' + $search_key + '&api_key=0ec22e6fe858f16002cec5f6bfe151ae&format=json&limit=4',
-  )
-
-  x = JSON.parse(response) %>
-
-  <div class="row">
-
-  <h1>Albums</h1>
-  <% for i in 0..x["results"]["albummatches"]["album"].length - 1 %>
-  
-    <div class="col-sm-3">
-     <img src=<%= x["results"]["albummatches"]["album"][i]["image"][2]["#text"] %> class="img-rounded" alt="Cinque Terre" width="182" height="138">
-     <h5><%=  x["results"]["albummatches"]["album"][i]["name"].to_s %></h5>
-     </br>
-    </div>
-   
-    <%  end  %>
-   
-  </div>
-  
-
-
-  <% 
-
-  response = RestClient::Request.execute(
-    :method => :get,
-    :url => 'http://ws.audioscrobbler.com/2.0/?method=track.search&track=' + $search_key + '&api_key=0ec22e6fe858f16002cec5f6bfe151ae&format=json&limit=4',
-  )
-
-  x = JSON.parse(response) %>
-
-  <div class="row">
-
-  <h1>Tracks</h1>
-  <% for i in 0..x["results"]["trackmatches"]["track"].length - 1 %>
-  
-    <div class="col-sm-3">
-     <img src=<%= x["results"]["trackmatches"]["track"][i]["image"][2]["#text"] %> class="img-rounded" alt="Cinque Terre" width="182" height="138">
-     <h5><%=  x["results"]["trackmatches"]["track"][i]["name"].to_s %></h5>
-     </br>
-    </div>
-   
-    <%  end  %>
-
-  </div>
-
-  
-
 
 </div>
 

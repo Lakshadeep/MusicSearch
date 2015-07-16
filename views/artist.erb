@@ -13,10 +13,14 @@
 
 </head>
 <body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+<a class="navbar-brand" href="/">MusicSearch</a>
+</nav>
 
 <div class="container">
-	  <h1>MusicSearch</h1>
-	  <p>Search the music</p> 
+	</br>
+	 </br>
+
 
 	 </br>
 	 </br>
@@ -61,7 +65,7 @@
   <% for i in 0..x["results"]["trackmatches"]["track"].length - 1 %>
   
     <div class="col-sm-3">
-     <img src=<%= x["results"]["trackmatches"]["track"][i]["image"][2]["#text"] %> class="img-rounded" alt="Cinque Terre" width="182" height="138">
+     <img src=<%= x["results"]["trackmatches"]["track"][i]["image"][2]["#text"] %> class="img-rounded" alt="Cinque Terre" width="182" height="160">
      <h5><a href="/track?name=<%= x["results"]["trackmatches"]["track"][i]["name"] %>&artist=<%= x["results"]["trackmatches"]["track"][i]["artist"] %>" >
      <%=  x["results"]["trackmatches"]["track"][i]["name"].to_s %></a></h5>
      </br>
@@ -89,7 +93,7 @@
   <% for i in 0..x["results"]["albummatches"]["album"].length - 1 %>
   
     <div class="col-sm-3">
-     <img src=<%= x["results"]["albummatches"]["album"][i]["image"][2]["#text"] %> class="img-rounded" alt="Cinque Terre" width="182" height="138">
+     <img src=<%= x["results"]["albummatches"]["album"][i]["image"][2]["#text"] %> class="img-rounded" alt="Cinque Terre" width="182" height="160">
      <h5><a href="/album?name=<%= x["results"]["albummatches"]["album"][i]["name"] %>&artist=<%= x["results"]["albummatches"]["album"][i]["artist"] %>" >
      <%=  x["results"]["albummatches"]["album"][i]["name"].to_s %></a></h5>
      </br>
