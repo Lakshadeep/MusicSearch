@@ -38,6 +38,10 @@ get '/album' do
 	erb:album
 end
 
+get '/track' do
+	erb:track
+end
+
 # end
 
 

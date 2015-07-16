@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>MusicSearch</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+
+<%     track = params['name']
+        artist = params['artist']  
+         response = RestClient::Request.execute(:method => :get,
+    :url => 'http://ws.audioscrobbler.com/2.0/?method=track.getinfo&track='+ track +'&artist='+artist+'&api_key=0ec22e6fe858f16002cec5f6bfe151ae&format=json',
+     )
+
+   x = JSON.parse(response)
+
+
+%>
+
+
+</head>
+<body>
+
+<div class="container">
+	  <h1>MusicSearch</h1>
+	  <p>Search the music</p> 
+
+	 </br>
+	 </br>
+
+	 <div class="row">
+	 <div class="col-sm-3">
+    <img src=<%= x["track"]["album"]["image"][3]["#text"] %> class="img-rounded" alt="Cinque Terre" width="240" height="220"> 
+    
+    </div>
+    <div class="col-sm-7">
+     <h1><%= track %></h1>
+     <h3>Album: <%= x["track"]["album"]["title"] %></h3>
+     <h4>Artist: <%= artist %></h4>
+     <p>Duration: <%= x["track"]["duration"].to_i/100000.0 %></p> 
+
+
+	</div>
+	</div>
+	</br>
+</div>
+<div class="container" >
+  <h3>About</h3>
+
+  <div class="span6" >
+  <%= x["track"]["wiki"]["summary"] %>
+  
+ 
+  </div>
+ 
+
+</div>
+
+</div>
+
+
+</body>
+</html>
