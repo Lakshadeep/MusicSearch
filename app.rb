@@ -2,12 +2,13 @@ require 'rubygems'
 require 'sinatra'
 require 'sinatra/base'
 require 'sinatra/twitter-bootstrap'
-require "net/https"
 require "uri"
 require 'json'
-require 'open-uri'
 require 'rest-client'
-
+load "controllers/Api.rb"
+load "controllers/Artist.rb"
+load "controllers/Album.rb"
+load "controllers/Track.rb"
 
 
 register Sinatra::Twitter::Bootstrap::Assets
@@ -19,21 +20,40 @@ get '/' do
 	erb:index
 
 end
+
 post '/search/' do
-	search_key = params[:search_key] || "Coldplay"
-    erb :index_post, :locals => {'search_key' => search_key}
+	search_key = params[:search_key] 
+	artist_list = Api.search_artist(search_key)
+	album_list = Api.search_album(search_key)
+	track_list = Api.search_track(search_key)
+    erb :index_post, :locals => {:artist_list => artist_list, :album_list => album_list, :track_list => track_list}
 end
 
 get '/artist' do
-	erb:artist
+	mbid = params['mbid']
+	x = Artist.new(mbid)
+	artist_info = x.artist_info()
+	artist_albums = Api.search_album(artist_info["name"])
+	artist_tracks = Api.search_track(artist_info["name"])
+	erb :artist, :locals => {:artist_info => artist_info, :artist_albums=> artist_albums, :artist_tracks => artist_tracks}
 end
 
 get '/album' do
-	erb:album
+	name = params['name']
+	artist = params['artist']
+	x = Album.new(name,artist)
+	album_info = x.album_info()
+	track_list = x.track_list()
+	erb :album, :locals => {:album_info => album_info, :track_list => track_list}
+
 end
 
 get '/track' do
-	erb:track
+	track = params['name']
+    artist = params['artist']  
+    x = Track.new(track,artist)
+    track_info = x.track_info()
+	erb :track, :locals => {:track_info => track_info}
 end
 
 

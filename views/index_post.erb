@@ -1,57 +1,46 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <title>MusicSearch</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-  <nav class="navbar navbar-inverse navbar-fixed-top">
-  <a class="navbar-brand" href="/">MusicSearch</a>
-  </nav>
-</head>
-<body>
+
+
+<div class="container" style="padding-top:100px">
+
 <form role="form" action="/search/" method="post">
-<div class="container">
-  </br></br></br></br></br>
   <div class="row">
-    <div class="col-xs-8">
+    <div class="col-xs-10 col-sm-10">
       <div class="form-group">
         <input type="text" class="form-control" name="search_key" required="true">
       </div>  
     </div>
-    <div class="col-xs-4">
+    <div class="col-xs-2 col-sm-2">
        <button type="submit" class="btn btn-primary" name="search">Search</button>
     </div>
   </div>
 </form>
 
-<% 
-  $search_key = params['search_key']
-  response = RestClient::Request.execute(
-    :method => :get,
-    :url => 'http://ws.audioscrobbler.com/2.0/?method=artist.search&artist=' + $search_key + '&api_key=0ec22e6fe858f16002cec5f6bfe151ae&format=json&limit=4',
-  )
-  x = JSON.parse(response) %>
+
+
+  <% 
+  $artist_list = artist_list
+  $album_list = album_list
+  $track_list = track_list
+   %>
+
   <div class="row">
     <h1>Artists</h1>
-    <% if x["results"]["opensearch:totalResults"].to_i != 0  %>
-    <% for i in 0..x["results"]["artistmatches"]["artist"].length - 1 %>
+    <% if $artist_list.length != 0  %>
+    <% $artist_list.each {|x| %>
     
     <div class="col-sm-3">
-       <img src=<%= x["results"]["artistmatches"]["artist"][i]["image"][2]["#text"] %> class="img-rounded" alt="No image available" width="182" height="160">
+       <img src=<%= x["img_link"] %> class="img-rounded" alt="No image available" width="182" height="160">
 
-       <% if !x["results"]["artistmatches"]["artist"][i]["mbid"].empty? %>
-            <h5><a href="/artist?mbid=<%= x["results"]["artistmatches"]["artist"][i]["mbid"] %>" >
-            <%=  x["results"]["artistmatches"]["artist"][i]["name"].to_s %></a></h5>
+       <% if x["mbid"].length > 0 %>
+            <h5><a href="/artist?mbid=<%= x["mbid"] %>" >
+            <%=  x["name"] %></a></h5>
        <% else %>
-            <h5><%=  x["results"]["artistmatches"]["artist"][i]["name"].to_s %></h5>
+            <h5><%=  x["name"] %></h5>
        <% end %>
-       </br>
+       
     </div>
    
-    <%  end  %>
+    <%  }  %>
     <% else %>
     <div class="col-sm-12">
       <p> Oops! No results match your search </p>
@@ -59,51 +48,43 @@
     <% end %>
    
   </div>
-  <% 
-  response = RestClient::Request.execute(
-    :method => :get,
-    :url => 'http://ws.audioscrobbler.com/2.0/?method=album.search&album=' + $search_key + '&api_key=0ec22e6fe858f16002cec5f6bfe151ae&format=json&limit=4',
-  )
-  x = JSON.parse(response) %>
+  
   <div class="row">
     <h1>Albums</h1>
-    <% if x["results"]["opensearch:totalResults"].to_i != 0 %>
-        <% for i in 0..x["results"]["albummatches"]["album"].length - 1 %>
+    <% if $album_list.length != 0 %>
+        <% $album_list.each { |x| %>
             <div class="col-sm-3">
-              <img src=<%= x["results"]["albummatches"]["album"][i]["image"][2]["#text"] %> class="img-rounded" alt="No image available" width="182" height="160">
-              <h5><a href="/album?name=<%= x["results"]["albummatches"]["album"][i]["name"] %>&artist=<%= x["results"]["albummatches"]["album"][i]["artist"] %>" >
-              <%=  x["results"]["albummatches"]["album"][i]["name"].to_s %></a></h5>
-              </br>
+              <img src=<%= x["img_link"] %> class="img-rounded" alt="No image available" width="182" height="160">
+              <% url = URI.encode("/album?name="+ x["name"] +"&artist="+ x["artist"] ) %>
+              <h5><a href= <%= url %> >
+              <%=  x["name"] %></a></h5>
+             
            </div>
    
-        <%  end  %>
+        <%  }  %>
     <% else %>
       <div class="col-sm-12">
         <p> Oops! No results match your search </p>
       </div>
     <% end %>
   </div>
-  <% 
-  response = RestClient::Request.execute(
-    :method => :get,
-    :url => 'http://ws.audioscrobbler.com/2.0/?method=track.search&track=' + $search_key + '&api_key=0ec22e6fe858f16002cec5f6bfe151ae&format=json&limit=4',
-  )
-  x = JSON.parse(response) %>
+  
   <div class="row">
     <h1>Tracks</h1>
-    <% if x["results"]["opensearch:totalResults"].to_i != 0  %>
-      <% for i in 0..x["results"]["trackmatches"]["track"].length - 1 %>
+    <% if $track_list.length != 0  %>
+      <% $track_list.each {|x| %>
         <div class="col-sm-3">
-        <% if x["results"]["trackmatches"]["track"][i]["image"].nil? %>
+        <% if x["img_link"].nil? %>
           <img src="" class="img-rounded" alt="Image not available" width="182" height="138">
         <% else %>
-          <img src=<%= x["results"]["trackmatches"]["track"][i]["image"][2]["#text"] %> class="img-rounded" alt="No image available" width="182" height="160">
+          <img src=<%= x["img_link"] %> class="img-rounded" alt="No image available" width="182" height="160">
        <% end %>
-       <h5><a href="/track?name=<%= x["results"]["trackmatches"]["track"][i]["name"] %>&artist=<%= x["results"]["trackmatches"]["track"][i]["artist"] %>" >
-       <%=  x["results"]["trackmatches"]["track"][i]["name"].to_s %></a></h5>
-       </br>
+       <% url = URI.encode("/track?name="+ x["name"] + "&artist="+ x["artist"] ) %>
+       <h5><a href= <%= url %> >
+       <%=  x["name"] %></a></h5>
+      
       </div>
-      <%  end  %>
+      <%  }  %>
     <% else %>
       <div class="col-sm-12">
         <p> Oops! No results match your search </p>
@@ -111,5 +92,3 @@
     <% end %>
   </div>
 </div>
-</body>
-</html>

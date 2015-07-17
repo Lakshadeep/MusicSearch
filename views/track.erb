@@ -1,53 +1,24 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <title>MusicSearch</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 
 
-<%     track = params['name']
-        artist = params['artist']  
-         response = RestClient::Request.execute(:method => :get,
-    :url => 'http://ws.audioscrobbler.com/2.0/?method=track.getinfo&track='+ track +'&artist='+artist+'&api_key=0ec22e6fe858f16002cec5f6bfe151ae&format=json',
-     )
-
-   x = JSON.parse(response)
-
-
+<%     $track_info =  track_info
 %>
 
 
-</head>
-<body>
 
-<nav class="navbar navbar-inverse navbar-fixed-top">
-<a class="navbar-brand" href="/">MusicSearch</a>
-</nav>
-
-	 </br></br>
-	 </br>
-<div class="container" >
+		 
+  <div class="container" >
 	 <div class="row">
 	 <div class="col-sm-3">
-   <% if !x["track"]["album"].nil? %>
-    <img src=<%= x["track"]["album"]["image"][3]["#text"] %> class="img-rounded" alt="Cinque Terre" width="240" height="220"> 
-    <% else %>
-    <img src="" class="img-rounded" alt="No image available" width="240" height="220"> 
-    <% end %>
+  
+  <img src=<%= $track_info["image_link"] %> class="img-rounded" alt="Image not available" width="240" height="220"> 
+   
 
     </div>
     <div class="col-sm-7">
-     <h1><%= track %></h1>
-     <% if !x["track"]["album"].nil? %>
-     <h3>Album: <%= x["track"]["album"]["title"] %></h3>
-     <% end %>
-     <h4>Artist: <%= artist %></h4>
-     <p>Duration: <%= x["track"]["duration"].to_i/100000.0 %></p> 
-
+     <h1><%= $track_info["name"] %></h1>
+     <h3>Album: <%= $track_info["album"] %></h3>
+     <h4>Artist: <%= $track_info["artist"] %></h4>
+     
 
 	</div>
 	</div>
@@ -57,11 +28,10 @@
   <h3>About</h3>
 
  
-  <% if x["track"]["wiki"].nil? %>
-   <div class="span6" >  <p>"Not avilable"</p> </div>
-   <% else %>
-    <div class="span6" ><%=  x["track"]["wiki"]["summary"] %> </div>
-
+  <% if $track_info["summary"].length>0 %>
+   <div class="span6" ><%=  $track_info["summary"] %> </div>
+  <% else %>
+   <div class="span6" ><p>"Not available"</p> </div>
   <% end %>
   
  

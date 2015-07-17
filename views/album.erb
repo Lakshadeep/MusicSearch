@@ -1,64 +1,39 @@
-<!-- REVIEW: DRY! Do Not Repeat Yourself. NEVER NEVER NEVER copy-paste code. -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <title>MusicSearch</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-</head>
-<body>
-<nav class="navbar navbar-inverse navbar-fixed-top">
-<a class="navbar-brand" href="/">MusicSearch</a>
-</nav>
+
 <div class="container">
-	 </br></br></br>
-	 <% album = params['name']
-	  	artist = params['artist']
-		 response = RestClient::Request.execute(:method => :get,
-	    :url => 'http://ws.audioscrobbler.com/2.0/?method=album.getinfo&artist='+ artist +'&album='+album+'&api_key=0ec22e6fe858f16002cec5f6bfe151ae&format=json',
-     )
- 	 x = JSON.parse(response)
+	 
+	 <% $album_info = album_info
+      $track_list = track_list
  	 %>
 
 
 	 <div class="row">
-	 	<div class="col-sm-3">
-      <!-- REVIEW: fix indentation. -->
-	 		<% if !x["album"]["image"].nil? %>
-     			<img src=<%= x["album"]["image"][3]["#text"] %> class="img-rounded" alt="Cinque Terre" width="240" height="220">
-     		<% else %>
-     			<img src="" class="img-rounded" alt="No image available" width="240" height="220">
-     		<% end %>
-     	</div>
-    	<div class="col-sm-7">
-     		<h1><%=  album %></h1>
-     		<h5><%=  artist %></h5>
-     		<% if !x["album"]["wiki"].nil? %>
-     			<p><%= x["album"]["wiki"]["summary"]  %></p>
-     		<% end %>
+	 	 <div class="col-sm-3 ">
+	 		 <img src=<%= $album_info["image_link"] %> class="img-rounded" alt="No image available" width="240" height="220">
+     </div>
+    	<div class="col-sm-7 ">
+     		<h1><%=  $album_info["name"] %></h1>
+     		<h5><%=  $album_info["artist"] %></h5>
+     		<p><%= $album_info["summary"]  %></p>
+  
 		</div>
 	</div>
-	</br></br>
+	
 
 
   <h2>Tracks list</h2>
 
    <div class="list-group">
-  	<% if !x["album"]["tracks"].empty? %>
-	   	<% for i in 0..x["album"]["tracks"]["track"].length - 1 %>
-			<a href="/track?name=<%= x["album"]["tracks"]["track"][i]["name"] %>&artist=<%= artist %>" class="list-group-item ">
-		      <h4 class="list-group-item-heading"><%= x["album"]["tracks"]["track"][i]["name"] %></h4>
-		      <p class="list-group-item-text">Duration: <%= x["album"]["tracks"]["track"][i]["duration"].to_i/100.0 %></p>
+  		<% if $track_list.length > 0  %>
+	   	<% $track_list.each{|x| %>
+	   		<% url = URI.encode("/track?name=" + x["name"] +"&artist="+ $album_info["artist"]) %>
+			<a href=<%= url %> class="list-group-item ">
+		      <h4 class="list-group-item-heading"><%= x["name"] %></h4>
+		      <p class="list-group-item-text">Duration: <%= x["duration"] %></p>
 		    </a>
-    	<% end %>
-    <% else %>
-    <%= "No info available" %>
-    <% end %>
+    	<% } %>
+   		<% else %>
+   			<p> Track list not available </p>
+   		<% end %>
    </div>
-   </br></br>
+   
 </div>
-</body>
-</html>
