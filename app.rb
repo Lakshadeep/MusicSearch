@@ -2,7 +2,6 @@ require 'rubygems'
 require 'sinatra'
 require 'sinatra/base'
 require 'sinatra/twitter-bootstrap'
-require 'haml'
 require "net/https"
 require "uri"
 require 'json'

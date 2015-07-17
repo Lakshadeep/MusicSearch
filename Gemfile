@@ -2,9 +2,8 @@ source 'https://rubygems.org'
 gem 'sinatra'
 gem 'sinatra-contrib'
 gem 'sinatra-twitter-bootstrap', :require => 'sinatra/twitter-bootstrap'
-gem 'haml'
+# REVIEW -- remove unnecessary gems before finalizing the code. ALWAYS.
 gem 'net'
-gem 'nokogiri'
-gem 'httparty'
+# REVIEW -- remove unnecessary gems before finalizing the code. ALWAYS.
+# REVIEW -- remove unnecessary gems before finalizing the code. ALWAYS.
 gem 'rest-client'
-gem 'jquery-rails', '~> 4.0.4'

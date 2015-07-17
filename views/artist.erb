@@ -14,7 +14,9 @@
 <a class="navbar-brand" href="/">MusicSearch</a>
 </nav>
 <div class="container">
+  <!-- REVIEW: Say hello to CSS. Use it! -->
 	</br></br></br></br>
+  <!-- REVIEW: Domain logic/app logic should NEVER be sitting in the view/UI -->
     <% mbid = params['mbid'] 
 	 response = RestClient::Request.execute(:method => :get,
     :url => 'http://ws.audioscrobbler.com/2.0/?method=artist.getinfo&mbid='+ mbid +'&api_key=0ec22e6fe858f16002cec5f6bfe151ae&format=json',
@@ -41,6 +43,13 @@
   x = JSON.parse(response) %>
  <div class="row">
   <h2>Top tracks</h2>
+    <!-- 
+      REVIEW: Ruby iterators. Use them! 
+      
+      x['results']['trackmatches']['track'].each do |track|
+      end 
+      
+    -->
 	  <% for i in 0..x["results"]["trackmatches"]["track"].length - 1 %>
   		 <div class="col-sm-3">
      		<img src=<%= x["results"]["trackmatches"]["track"][i]["image"][2]["#text"] %> class="img-rounded" alt="Cinque Terre" width="182" height="160">

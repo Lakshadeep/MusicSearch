@@ -1,3 +1,4 @@
+<!-- REVIEW: DRY! Do Not Repeat Yourself. NEVER NEVER NEVER copy-paste code. -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -25,6 +26,7 @@
 
 	 <div class="row">
 	 	<div class="col-sm-3">
+      <!-- REVIEW: fix indentation. -->
 	 		<% if !x["album"]["image"].nil? %>
      			<img src=<%= x["album"]["image"][3]["#text"] %> class="img-rounded" alt="Cinque Terre" width="240" height="220">
      		<% else %>
