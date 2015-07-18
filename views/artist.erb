@@ -17,6 +17,7 @@
 	
   <div class="row">
     <h2>Top tracks</h2>
+    <!-- REVIEW: Whenever you're passing a multi-line block of code, use do/end instead of the curly brace syntax. The latter is generally used for one-liners, eg. arr.filter {|x| x%2==0 }, to filter all even numbers from an array -->
 	  <% $artist_track.each { |x| %>
   		<div class="col-sm-3">
      		<img src=<%= x["img_link"] %> class="img-rounded" alt="Not available" width="182" height="160">
