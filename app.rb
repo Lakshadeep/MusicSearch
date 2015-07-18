@@ -25,7 +25,7 @@ post '/search/' do
 	artist_list = Api.search_artist(search_key)
 	album_list = Api.search_album(search_key)
 	track_list = Api.search_track(search_key)
-    erb :index_post, :locals => {:artist_list => artist_list, :album_list => album_list, :track_list => track_list}
+  erb :index_post, :locals => {:artist_list => artist_list, :album_list => album_list, :track_list => track_list}
 end
 
 get '/artist' do

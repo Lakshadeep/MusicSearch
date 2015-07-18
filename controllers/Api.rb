@@ -10,20 +10,21 @@ class Api
 	def self.search_artist(search_key)
 		url = URI.encode(@api_link + 'method=artist.search&artist='+ search_key + '&api_key='+ @api_key + '&limit='+@limit.to_s+'&format='+@format)
 		response = RestClient::Request.execute(:method => :get,:url => url,)
- 	    artist_result = JSON.parse(response)
+ 	  artist_result = JSON.parse(response)
 		total_results = artist_result["results"]["opensearch:totalResults"].to_i
 		results = []
 
 		if total_results != 0 
- 	    	artist_result["results"]["artistmatches"]["artist"].each { |x|
- 	    		temp = {"name" => x["name"],
- 	    				"mbid" => x["mbid"],
- 	    				"img_link" => x["image"][2]["#text"] 
- 	    				}
- 	    		results.push(temp)
- 	    	}
- 	    end
- 	    return results
+			# REVIEW -- use collect
+    	artist_result["results"]["artistmatches"]["artist"].each { |x|
+    		temp = {"name" => x["name"],
+    				"mbid" => x["mbid"],
+    				"img_link" => x["image"][2]["#text"] 
+    				}
+    		results.push(temp)
+    	}
+ 	  end
+ 	  return results
 	end
 
 

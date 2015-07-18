@@ -11,6 +11,7 @@ class Track
 	def initialize(track_name,artist_name)
 		url = URI.encode(@@api_link+'method=track.getinfo&artist='+ artist_name + '&track='+ track_name+'&api_key='+@@api_key+'&format='+@@format)
 		response = RestClient::Request.execute(:method => :get,:url => url,)
+		# REVIEW -- why is this a class variable?
  	    @@track_info = JSON.parse(response)
 		
 	end

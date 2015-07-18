@@ -12,8 +12,8 @@ class Artist
 	def initialize(mbid)
 		url = URI.encode(@@api_link+'method=artist.getinfo&mbid='+ mbid +'&api_key='+@@api_key+'&format='+@@format)
 		response = RestClient::Request.execute(:method => :get,:url => url,)
- 	    @@artist_info = JSON.parse(response)
-		
+		# REVIEW -- why is this a class variable?
+ 	    @@artist_info = JSON.parse(response)		
 	end
 
 	def artist_info()
