@@ -7,22 +7,21 @@
 	
   <div class="row">
 		<div class="col-sm-3">
-     	<img src=<%= $artist_info["image_link"] %> class="img-rounded" alt="Not available" width="240" height="165">
+     	<img src=<%= $artist_info.img_link %> class="img-rounded" alt="Not available" width="240" height="165">
     </div>
     <div class="col-sm-7">
-     	<h1><%= $artist_info["name"] %></h1>
-     	<p><%= $artist_info["summary"] %></p>
+     	<h1><%= $artist_info.name %></h1>
+     	<p><%= $artist_info.wiki %></p>
 		</div>
 	</div>
 	
   <div class="row">
     <h2>Top tracks</h2>
-    <!-- REVIEW: Whenever you're passing a multi-line block of code, use do/end instead of the curly brace syntax. The latter is generally used for one-liners, eg. arr.filter {|x| x%2==0 }, to filter all even numbers from an array -->
 	  <% $artist_track.each { |x| %>
   		<div class="col-sm-3">
-     		<img src=<%= x["img_link"] %> class="img-rounded" alt="Not available" width="182" height="160">
-        <% url = URI.encode("/track?name="+x["name"]+"&artist="+x["artist"]) %>
-     		<h5><a href=  <%= url %> > <%=  x["name"] %></a></h5>
+     		<img src=<%= x.img_link %> class="img-rounded" alt="Not available" width="182" height="160">
+        <% url = URI.encode("/track?name="+x.name+"&artist="+x.artist) %>
+     		<h5><a href=  <%= url %> > <%=  x.name %></a></h5>
      	</div>
    	<%  }  %>
   </div>
@@ -31,10 +30,11 @@
 	  <h2>Top albums</h2>
   	<% $artist_album.each {|x| %>
   		<div class="col-sm-3">
-	     	<img src=<%= x["img_link"] %> class="img-rounded" alt="Not available" width="182" height="160">
-        <% url = URI.encode("/album?name="+x["name"] +"&artist="+x["artist"] ) %>
-	     	<h5><a href= <%= url %> > <%=  x["name"] %></a></h5>
-	    </div>
+        <img src=<%= x.img_link %> class="img-rounded" alt="No image available" width="182" height="160">
+        <% url = URI.encode("/album?name="+ x.name + "&artist=" + x.artist ) %>
+        <h5><a href= <%= url %> >
+          <%=  x.name %></a></h5>
+        </div>
     <%  }  %>
   </div>
 

@@ -25,33 +25,29 @@ post '/search/' do
 	artist_list = Api.search_artist(search_key)
 	album_list = Api.search_album(search_key)
 	track_list = Api.search_track(search_key)
-  erb :index_post, :locals => {:artist_list => artist_list, :album_list => album_list, :track_list => track_list}
+    erb :index_post, :locals => {:artist_list => artist_list, :album_list => album_list, :track_list => track_list}
 end
 
 get '/artist' do
 	mbid = params['mbid']
-	x = Artist.new(mbid)
-	artist_info = x.artist_info()
-	artist_albums = Api.search_album(artist_info["name"])
-	artist_tracks = Api.search_track(artist_info["name"])
+	artist_info = Api.artist_info(mbid)
+	artist_albums = Api.search_album(artist_info.name)
+	artist_tracks = Api.search_track(artist_info.name)
 	erb :artist, :locals => {:artist_info => artist_info, :artist_albums=> artist_albums, :artist_tracks => artist_tracks}
 end
 
 get '/album' do
 	name = params['name']
 	artist = params['artist']
-	x = Album.new(name,artist)
-	album_info = x.album_info()
-	track_list = x.track_list()
-	erb :album, :locals => {:album_info => album_info, :track_list => track_list}
+	album_info = Api.album_info(name,artist)
+	erb :album, :locals => {:album_info => album_info}
 
 end
 
 get '/track' do
 	track = params['name']
     artist = params['artist']  
-    x = Track.new(track,artist)
-    track_info = x.track_info()
+    track_info = Api.track_info(track,artist)
 	erb :track, :locals => {:track_info => track_info}
 end
 
