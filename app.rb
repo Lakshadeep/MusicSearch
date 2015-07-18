@@ -5,11 +5,11 @@ require 'sinatra/twitter-bootstrap'
 require "uri"
 require 'json'
 require 'rest-client'
+
 load "controllers/Api.rb"
 load "controllers/Artist.rb"
 load "controllers/Album.rb"
 load "controllers/Track.rb"
-
 
 register Sinatra::Twitter::Bootstrap::Assets
 use Rack::CommonLogger
@@ -18,7 +18,6 @@ set :public_folder, 'views'
 
 get '/' do
 	erb:index
-
 end
 
 post '/search/' do

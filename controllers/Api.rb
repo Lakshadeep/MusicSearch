@@ -1,5 +1,3 @@
-#class for fetching the data from API
-
 require 'rest-client'
 require 'uri'
 
