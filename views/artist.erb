@@ -20,7 +20,7 @@
 	  <% $artist_track.each { |x| %>
   		<div class="col-sm-3">
      		<img src=<%= x.img_link %> class="img-rounded" alt="Not available" width="182" height="160">
-        <% url = URI.encode("/track?name="+x.name+"&artist="+x.artist) %>
+        <% url = URI.encode("/track?name="+x.name+"&artist="+x.artist+"&id="+x.id) %>
      		<h5><a href=  <%= url %> > <%=  x.name %></a></h5>
      	</div>
    	<%  }  %>
@@ -31,7 +31,7 @@
   	<% $artist_album.each {|x| %>
   		<div class="col-sm-3">
         <img src=<%= x.img_link %> class="img-rounded" alt="No image available" width="182" height="160">
-        <% url = URI.encode("/album?name="+ x.name + "&artist=" + x.artist ) %>
+        <% url = URI.encode("/album?name="+ x.name + "&artist=" + x.artist + "&id=" + x.id) %>
         <h5><a href= <%= url %> >
           <%=  x.name %></a></h5>
         </div>

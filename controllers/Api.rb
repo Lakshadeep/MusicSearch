@@ -66,7 +66,7 @@ class Api
   end
 
 
-  def self.album_info(album_name,artist_name)
+  def self.album_info(album_name,artist_name,id)
     url = URI.encode(@api_link+'method=album.getinfo&artist='+ artist_name + '&album='+ album_name+'&api_key='+@api_key+'&format='+@format)
     response = RestClient::Request.execute(:method => :get,:url => url,)
     album_info = JSON.parse(response)
@@ -85,7 +85,7 @@ class Api
 
 
 
-  def self.track_info(track_name,artist_name)
+  def self.track_info(track_name,artist_name,id)
     url = URI.encode(@api_link+'method=track.getinfo&artist='+ artist_name + '&track='+ track_name+'&api_key='+@api_key+'&format='+@format)
     response = RestClient::Request.execute(:method => :get,:url => url,)
     track_info = JSON.parse(response)

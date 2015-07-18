@@ -46,8 +46,8 @@
       <% $album_list.each { |x| %>
         <div class="col-sm-3">
           <img src=<%= x.img_link %> class="img-rounded" alt="No image available" width="182" height="160">
-          <% url = URI.encode("/album?name="+ x.name + "&artist=" + x.artist ) %>
-          <h5><a href= <%= url %> >
+          <% url = URI.encode("/album?name="+ x.name + "&artist=" + x.artist+"&id="+x.id ) %>
+          <h5><a href=" <%=  url %> ">
           <%=  x.name %></a></h5>
         </div>
       <%  }  %>
@@ -68,8 +68,8 @@
           <% else %>
             <img src=<%= x.img_link %> class="img-rounded" alt="No image available" width="182" height="160">
           <% end %>
-          <% url = URI.encode("/track?name="+ x.name + "&artist="+ x.artist ) %>
-          <h5><a href= <%= url %> > <%=  x.name %></a></h5>
+          <% url = URI.encode("/track?name="+ x.name + "&artist="+ x.artist+"&id="+x.id ) %>
+          <h5><a href= <%=  url %> > <%=  x.name %></a></h5>
         </div>
       <%  }  %>
     <% else %>

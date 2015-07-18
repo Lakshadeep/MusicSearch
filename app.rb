@@ -6,6 +6,9 @@ require "uri"
 require 'json'
 require 'rest-client'
 
+#load Api.rb to use Last.fm API
+#load Api2.rb to use Spotify API
+
 load "controllers/Api.rb"
 load "controllers/Artist.rb"
 load "controllers/Album.rb"
@@ -39,15 +42,17 @@ end
 get '/album' do
 	name = params['name']
 	artist = params['artist']
-	album_info = Api.album_info(name,artist)
+	id = params['id']
+	album_info = Api.album_info(name,artist,id)
 	erb :album, :locals => {:album_info => album_info}
 
 end
 
 get '/track' do
 	track = params['name']
-    artist = params['artist']  
-    track_info = Api.track_info(track,artist)
+    artist = params['artist']
+    id = params['id']  
+    track_info = Api.track_info(track,artist,id)
 	erb :track, :locals => {:track_info => track_info}
 end
 

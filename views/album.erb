@@ -20,7 +20,7 @@
   <div class="list-group">
   	<% if $track_list.length > 0  %>
 	   	<% $track_list.each{|x| %>
-	   		<% url = URI.encode("/track?name="+ x.name + "&artist="+ x.artist ) %>
+	   		<% url = URI.encode("/track?name="+ x.name + "&artist="+ x.artist+"&id="+x.id ) %>
          <a href= <%= url %> class="list-group-item">
 	   		  <h4 class="list-group-item-heading"><%= x.name %></h4>
 		      <p class="list-group-item-text">Duration: <%= x.duration %></p>
