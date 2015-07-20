@@ -15,10 +15,10 @@ class Api
     artists = []
 
     if total_results != 0 
-     artist_result["results"]["artistmatches"]["artist"].each { |x|
+    artists = artist_result["results"]["artistmatches"]["artist"].collect do |x|
       artist_temp = Artist.new(x["name"],x["mbid"],x["image"][2]["#text"],"")
-      artists.push(artist_temp)
-      }
+      #artists.push(artist_temp)
+      end
     end
     return artists
   end
@@ -32,10 +32,10 @@ class Api
     results = []
 
     if total_results != 0 
-      album_result["results"]["albummatches"]["album"].each { |x|
+      results = album_result["results"]["albummatches"]["album"].collect do |x|
         album_temp = Album.new(x["name"],x["artist"],x["image"][2]["#text"],"","","")
-        results.push(album_temp)
-      }
+        #results.push(album_temp)
+      end
     end
     return results
   end
@@ -48,11 +48,11 @@ class Api
     results = []
 
     if total_results != 0 
-      track_result["results"]["trackmatches"]["track"].each { |x|
+      results = track_result["results"]["trackmatches"]["track"].collect do |x|
       img_link = x["image"].nil? ? "" : x["image"][2]["#text"]
       track_temp = Track.new(x["name"],"",x["artist"],"",img_link,"","")
-      results.push(track_temp)
-    }
+      #results.push(track_temp)
+      end
     end
     return results
   end
